@@ -1,159 +1,116 @@
-import { useState, useEffect } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { TrendingUp, TrendingDown } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import PriceChart from "@/components/PriceChart";
-
-interface CryptoAsset {
-  symbol: string;
-  name: string;
-  price: number;
-  change: number;
-  volume: string;
-  marketCap: string;
-}
+import { Search, Filter, TrendingUp, TrendingDown } from "lucide-react";
 
 const Markets = () => {
-  const [assets, setAssets] = useState<CryptoAsset[]>([
-    { symbol: "BTC", name: "Bitcoin", price: 43562.21, change: 2.45, volume: "$1.2B", marketCap: "$845B" },
-    { symbol: "ETH", name: "Ethereum", price: 2284.15, change: 1.87, volume: "$845M", marketCap: "$274B" },
-    { symbol: "BNB", name: "Binance Coin", price: 312.47, change: -0.32, volume: "$421M", marketCap: "$48B" },
-    { symbol: "XRP", name: "Ripple", price: 0.5487, change: 3.21, volume: "$234M", marketCap: "$27B" },
-    { symbol: "SOL", name: "Solana", price: 98.76, change: 5.67, volume: "$156M", marketCap: "$41B" },
-    { symbol: "ADA", name: "Cardano", price: 0.42, change: -1.26, volume: "$124M", marketCap: "$14B" },
-    { symbol: "DOT", name: "Polkadot", price: 5.23, change: 1.12, volume: "$78M", marketCap: "$6.2B" },
-    { symbol: "DOGE", name: "Dogecoin", price: 0.12, change: 8.45, volume: "$1.1B", marketCap: "$15.2B" },
-    { symbol: "AVAX", name: "Avalanche", price: 32.16, change: 3.76, volume: "$96M", marketCap: "$11.3B" },
-    { symbol: "LINK", name: "Chainlink", price: 14.72, change: -0.48, volume: "$86M", marketCap: "$7.8B" },
-  ]);
+  const [activeTab, setActiveTab] = useState("spot");
 
-  const [filter, setFilter] = useState("all");
-
-  const filteredAssets = filter === "all" 
-    ? assets 
-    : filter === "gainers" 
-      ? assets.filter(asset => asset.change > 0)
-      : assets.filter(asset => asset.change < 0);
-
-  const [selectedAsset, setSelectedAsset] = useState<CryptoAsset | null>(null);
+  const marketData = [
+    { pair: "BTC/USDT", price: "43,562.21", change: "+2.45", volume: "1.2B", market: "spot" },
+    { pair: "ETH/USDT", price: "2,284.15", change: "+1.87", volume: "845M", market: "spot" },
+    { pair: "BTC/USD", price: "43,600", change: "-0.32", volume: "421M", market: "futures" },
+    { pair: "ETH/USD", price: "2,285", change: "+3.21", volume: "234M", market: "futures" },
+  ];
 
   return (
-    <>
-      <Header />
-      <main className="min-h-screen bg-[#0A0B0F] text-white pt-20 pb-24">
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              Cryptocurrency Market
-            </h1>
-            <p className="text-gray-400 mb-8">
-              View real-time prices and market data for the top cryptocurrencies traded on Madonichain Exchange.
-            </p>
+    <main className="min-h-screen bg-[#0A0B0F] text-white pt-20 pb-12">
+      <div className="container mx-auto px-4">
+        {/* Header Section */}
+        <div className="animate-fade-in">
+          <h1 className="text-4xl font-bold mb-2 text-gradient">
+            Cryptocurrency Markets
+          </h1>
+          <p className="text-gray-400 mb-8">
+            Real-time cryptocurrency prices and market data
+          </p>
+        </div>
 
-            <div className="mb-8">
-              {selectedAsset && (
-                <Card className="bg-[#131722] border-gray-800 mb-8">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-blue-600/20 flex items-center justify-center text-xs">
-                        {selectedAsset.symbol}
-                      </div>
-                      {selectedAsset.name} Price Chart
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <PriceChart symbol={selectedAsset.symbol} />
-                  </CardContent>
-                </Card>
-              )}
+        {/* Search and Filters */}
+        <div className="flex flex-wrap gap-4 mb-8 animate-slide-up">
+          <div className="flex-1 min-w-[300px]">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search markets..."
+                className="w-full pl-10 pr-4 py-2 bg-gray-900/50 border border-gray-800 rounded-lg focus:outline-none focus:border-blue-500 text-white"
+              />
             </div>
+          </div>
+          <Button variant="outline" className="bg-gray-900/50 border-gray-800 text-white">
+            <Filter className="mr-2 h-4 w-4" /> Filters
+          </Button>
+        </div>
 
-            <div className="flex flex-wrap gap-3 mb-8">
-              <Button 
-                variant={filter === "all" ? "default" : "outline"} 
-                onClick={() => setFilter("all")}
-                className={filter === "all" ? "bg-blue-600 hover:bg-blue-700" : "border-gray-700"}
-              >
-                All Assets
-              </Button>
-              <Button 
-                variant={filter === "gainers" ? "default" : "outline"} 
-                onClick={() => setFilter("gainers")}
-                className={filter === "gainers" ? "bg-blue-600 hover:bg-blue-700" : "border-gray-700"}
-              >
-                Top Gainers
-              </Button>
-              <Button 
-                variant={filter === "losers" ? "default" : "outline"} 
-                onClick={() => setFilter("losers")}
-                className={filter === "losers" ? "bg-blue-600 hover:bg-blue-700" : "border-gray-700"}
-              >
-                Top Losers
-              </Button>
-            </div>
+        {/* Market Tabs */}
+        <div className="flex gap-4 mb-6 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <Button
+            variant={activeTab === "spot" ? "default" : "ghost"}
+            onClick={() => setActiveTab("spot")}
+            className="text-white"
+          >
+            Spot Markets
+          </Button>
+          <Button
+            variant={activeTab === "futures" ? "default" : "ghost"}
+            onClick={() => setActiveTab("futures")}
+            className="text-white"
+          >
+            Futures
+          </Button>
+        </div>
 
-            <Card className="bg-[#131722] border-gray-800">
-              <CardContent className="p-0">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead className="border-b border-gray-800">
-                      <tr className="text-left">
-                        <th className="p-4 text-gray-400">Asset</th>
-                        <th className="p-4 text-gray-400">Price</th>
-                        <th className="p-4 text-gray-400">24h Change</th>
-                        <th className="p-4 text-gray-400">24h Volume</th>
-                        <th className="p-4 text-gray-400">Market Cap</th>
-                        <th className="p-4 text-gray-400">Trade</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredAssets.map((asset) => (
-                        <tr 
-                          key={asset.symbol} 
-                          className="border-b border-gray-800/50 hover:bg-gray-800/30 cursor-pointer transition-colors"
-                          onClick={() => setSelectedAsset(asset)}
-                        >
-                          <td className="p-4">
-                            <div className="flex items-center gap-3">
-                              <div className="w-8 h-8 rounded-full bg-blue-600/20 flex items-center justify-center text-xs">
-                                {asset.symbol}
-                              </div>
-                              <div>
-                                <div className="font-medium">{asset.name}</div>
-                                <div className="text-sm text-gray-400">{asset.symbol}</div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="p-4 font-medium">${asset.price.toLocaleString()}</td>
-                          <td className="p-4">
-                            <div className={`flex items-center ${asset.change >= 0 ? "text-green-500" : "text-red-500"}`}>
-                              {asset.change >= 0 ? (
-                                <TrendingUp className="h-4 w-4 mr-1" />
-                              ) : (
-                                <TrendingDown className="h-4 w-4 mr-1" />
-                              )}
-                              {asset.change}%
-                            </div>
-                          </td>
-                          <td className="p-4 text-gray-300">{asset.volume}</td>
-                          <td className="p-4 text-gray-300">{asset.marketCap}</td>
-                          <td className="p-4">
-                            <Button size="sm" className="bg-blue-600 hover:bg-blue-700">Trade</Button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
+        {/* Market Table */}
+        <div className="bg-gray-900/50 rounded-xl border border-gray-800 overflow-hidden animate-fade-in" style={{ animationDelay: "0.3s" }}>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-gray-800">
+                  <th className="text-left p-4 text-gray-400">Pair</th>
+                  <th className="text-right p-4 text-gray-400">Price</th>
+                  <th className="text-right p-4 text-gray-400">24h Change</th>
+                  <th className="text-right p-4 text-gray-400">24h Volume</th>
+                </tr>
+              </thead>
+              <tbody>
+                {marketData
+                  .filter(item => item.market === activeTab)
+                  .map((item, index) => (
+                    <tr
+                      key={index}
+                      className="border-b border-gray-800 hover:bg-gray-800/50 transition-colors"
+                    >
+                      <td className="p-4 font-medium">{item.pair}</td>
+                      <td className="text-right p-4">${item.price}</td>
+                      <td className={`text-right p-4 flex items-center justify-end ${
+                        item.change.startsWith('+') ? 'text-green-400' : 'text-red-400'
+                      }`}>
+                        {item.change.startsWith('+') ? (
+                          <TrendingUp className="w-4 h-4 mr-1" />
+                        ) : (
+                          <TrendingDown className="w-4 h-4 mr-1" />
+                        )}
+                        {item.change}%
+                      </td>
+                      <td className="text-right p-4 text-gray-400">${item.volume}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
           </div>
         </div>
-      </main>
-      <Footer />
-    </>
+
+        {/* Chart Section */}
+        <div className="mt-8 animate-fade-in" style={{ animationDelay: "0.4s" }}>
+          <div className="bg-gray-900/50 rounded-xl border border-gray-800 p-6">
+            <h2 className="text-xl font-bold mb-4">BTC/USDT Price Chart</h2>
+            <PriceChart symbol="BTC/USDT" />
+          </div>
+        </div>
+      </div>
+    </main>
   );
 };
 

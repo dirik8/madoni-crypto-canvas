@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight, TrendingUp, ShieldCheck, Users } from "lucide-react";
 
@@ -6,16 +5,16 @@ const HeroSection = () => {
   return (
     <div className="min-h-[90vh] bg-[#0A0B0F] relative overflow-hidden">
       {/* Gradient Orb */}
-      <div className="absolute top-[-200px] right-[-200px] w-[500px] h-[500px] bg-blue-500/20 blur-[150px] rounded-full" />
+      <div className="absolute top-[-200px] right-[-200px] w-[500px] h-[500px] bg-blue-500/20 blur-[150px] rounded-full animate-pulse" />
       
       <div className="container mx-auto px-4 pt-20 lg:pt-32">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
           {/* Left Column - Text Content */}
-          <div className="flex-1 text-left z-10">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent leading-tight mb-6">
+          <div className="flex-1 text-left z-10 animate-fade-in">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient leading-tight mb-6">
               Trade Smarter with Madonichain Exchange
             </h1>
-            <p className="text-gray-400 text-lg md:text-xl mb-8 max-w-xl">
+            <p className="text-gray-300 text-lg md:text-xl mb-8 max-w-xl">
               Experience the next generation of crypto trading with advanced tools, deep liquidity, and institutional-grade security.
             </p>
             
@@ -40,7 +39,7 @@ const HeroSection = () => {
             </div>
             
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 animate-slide-up" style={{ animationDelay: "0.2s" }}>
               <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
                 Start Trading Now <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
@@ -51,7 +50,7 @@ const HeroSection = () => {
           </div>
           
           {/* Right Column - Trading Features */}
-          <div className="flex-1 grid grid-cols-2 gap-4 z-10">
+          <div className="flex-1 grid grid-cols-2 gap-4 z-10 animate-fade-in" style={{ animationDelay: "0.3s" }}>
             <div className="bg-gray-900/50 backdrop-blur-lg p-6 rounded-xl border border-gray-800">
               <TrendingUp className="h-8 w-8 text-blue-500 mb-3" />
               <h3 className="text-lg font-semibold mb-2">Spot Trading</h3>

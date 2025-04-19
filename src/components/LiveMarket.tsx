@@ -19,17 +19,17 @@ const LiveMarket = () => {
   ]);
 
   return (
-    <div className="w-full bg-[#0A0B0F]/80 backdrop-blur-lg border-y border-gray-800">
+    <div className="w-full bg-gray-900/80 backdrop-blur-lg border-y border-gray-800">
       <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center gap-8 overflow-x-auto scrollbar-none">
+        <div className="flex items-center gap-8 overflow-x-auto scrollbar-none animate-slide-up">
           {prices.map((crypto) => (
-            <div key={crypto.symbol} className="flex items-center gap-4 min-w-[200px]">
+            <div key={crypto.symbol} className="flex items-center gap-4 min-w-[200px] hover:bg-gray-800/50 p-3 rounded-lg transition-colors">
               <div className="flex-1">
-                <div className="text-sm font-medium">{crypto.symbol}</div>
-                <div className="text-lg font-bold">${crypto.price}</div>
+                <div className="text-sm font-medium text-gray-300">{crypto.symbol}</div>
+                <div className="text-lg font-bold text-white">${crypto.price}</div>
               </div>
               <div className="text-right">
-                <div className={`flex items-center ${Number(crypto.change) >= 0 ? "text-green-500" : "text-red-500"}`}>
+                <div className={`flex items-center ${Number(crypto.change) >= 0 ? "text-green-400" : "text-red-400"}`}>
                   {Number(crypto.change) >= 0 ? (
                     <TrendingUp className="h-4 w-4 mr-1" />
                   ) : (
@@ -37,7 +37,7 @@ const LiveMarket = () => {
                   )}
                   {crypto.change}%
                 </div>
-                <div className="text-sm text-gray-500">Vol {crypto.volume}</div>
+                <div className="text-sm text-gray-400">Vol {crypto.volume}</div>
               </div>
             </div>
           ))}

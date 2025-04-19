@@ -37,7 +37,7 @@ const PriceChart = ({ symbol }: PriceChartProps) => {
   }, [symbol]);
 
   return (
-    <div className="h-[400px] w-full">
+    <div className="h-[400px] w-full animate-fade-in">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           data={data}
@@ -53,9 +53,10 @@ const PriceChart = ({ symbol }: PriceChartProps) => {
           <YAxis stroke="#6B7280" />
           <Tooltip
             contentStyle={{
-              backgroundColor: "#1F2937",
+              backgroundColor: "#111827",
               border: "1px solid #374151",
               borderRadius: "0.375rem",
+              color: "#F9FAFB"
             }}
           />
           <Area
