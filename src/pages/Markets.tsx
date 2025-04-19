@@ -1,10 +1,10 @@
-
 import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import PriceChart from "@/components/PriceChart";
 
 interface CryptoAsset {
   symbol: string;
@@ -37,18 +37,38 @@ const Markets = () => {
       ? assets.filter(asset => asset.change > 0)
       : assets.filter(asset => asset.change < 0);
 
+  const [selectedAsset, setSelectedAsset] = useState<CryptoAsset | null>(null);
+
   return (
     <>
       <Header />
       <main className="min-h-screen bg-[#0A0B0F] text-white pt-20 pb-24">
         <div className="container mx-auto px-4 py-12">
-          <div className="max-w-4xl mx-auto mb-12">
+          <div className="max-w-4xl mx-auto">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">
               Cryptocurrency Market
             </h1>
             <p className="text-gray-400 mb-8">
               View real-time prices and market data for the top cryptocurrencies traded on Madonichain Exchange.
             </p>
+
+            <div className="mb-8">
+              {selectedAsset && (
+                <Card className="bg-[#131722] border-gray-800 mb-8">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-blue-600/20 flex items-center justify-center text-xs">
+                        {selectedAsset.symbol}
+                      </div>
+                      {selectedAsset.name} Price Chart
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <PriceChart symbol={selectedAsset.symbol} />
+                  </CardContent>
+                </Card>
+              )}
+            </div>
 
             <div className="flex flex-wrap gap-3 mb-8">
               <Button 
@@ -90,7 +110,11 @@ const Markets = () => {
                     </thead>
                     <tbody>
                       {filteredAssets.map((asset) => (
-                        <tr key={asset.symbol} className="border-b border-gray-800/50 hover:bg-gray-800/30">
+                        <tr 
+                          key={asset.symbol} 
+                          className="border-b border-gray-800/50 hover:bg-gray-800/30 cursor-pointer transition-colors"
+                          onClick={() => setSelectedAsset(asset)}
+                        >
                           <td className="p-4">
                             <div className="flex items-center gap-3">
                               <div className="w-8 h-8 rounded-full bg-blue-600/20 flex items-center justify-center text-xs">

@@ -7,6 +7,7 @@ import TrustSection from "@/components/TrustSection";
 import HowItWorks from "@/components/HowItWorks";
 import MobileApp from "@/components/MobileApp";
 import Footer from "@/components/Footer";
+import Testimonials from "@/components/Testimonials";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
         <ProductFeatures />
         <TrustSection />
         <HowItWorks />
+        <Testimonials />
         <MobileApp />
       </main>
       <Footer />
