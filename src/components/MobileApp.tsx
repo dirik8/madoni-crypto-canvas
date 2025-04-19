@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
-import { AppleIcon, PlayIcon } from "lucide-react";
+// Import icons from lucide-react with different names
+import { Apple as LucideApple, Play as LucidePlay } from "lucide-react";
 
 // Creating custom icons since Lucide doesn't have exact matches for app stores
 const AppleIcon = () => (
