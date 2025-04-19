@@ -15,14 +15,14 @@ const Markets = () => {
   ];
 
   return (
-    <main className="min-h-screen bg-[#0A0B0F] text-white pt-20 pb-12">
+    <main className="min-h-screen bg-[#0A0B0F] text-gray-100 pt-20 pb-12">
+      {/* Header Section */}
       <div className="container mx-auto px-4">
-        {/* Header Section */}
         <div className="animate-fade-in">
           <h1 className="text-4xl font-bold mb-2 text-gradient">
             Cryptocurrency Markets
           </h1>
-          <p className="text-gray-400 mb-8">
+          <p className="text-gray-300 mb-8">
             Real-time cryptocurrency prices and market data
           </p>
         </div>
@@ -35,11 +35,11 @@ const Markets = () => {
               <input
                 type="text"
                 placeholder="Search markets..."
-                className="w-full pl-10 pr-4 py-2 bg-gray-900/50 border border-gray-800 rounded-lg focus:outline-none focus:border-blue-500 text-white"
+                className="w-full pl-10 pr-4 py-2 bg-gray-900/50 border border-gray-800 rounded-lg focus:outline-none focus:border-blue-500 text-gray-100"
               />
             </div>
           </div>
-          <Button variant="outline" className="bg-gray-900/50 border-gray-800 text-white">
+          <Button variant="outline" className="bg-gray-900/50 border-gray-800 text-gray-100">
             <Filter className="mr-2 h-4 w-4" /> Filters
           </Button>
         </div>
@@ -49,14 +49,14 @@ const Markets = () => {
           <Button
             variant={activeTab === "spot" ? "default" : "ghost"}
             onClick={() => setActiveTab("spot")}
-            className="text-white"
+            className={activeTab === "spot" ? "text-white bg-blue-600" : "text-gray-300"}
           >
             Spot Markets
           </Button>
           <Button
             variant={activeTab === "futures" ? "default" : "ghost"}
             onClick={() => setActiveTab("futures")}
-            className="text-white"
+            className={activeTab === "futures" ? "text-white bg-blue-600" : "text-gray-300"}
           >
             Futures
           </Button>
@@ -68,10 +68,10 @@ const Markets = () => {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-gray-800">
-                  <th className="text-left p-4 text-gray-400">Pair</th>
-                  <th className="text-right p-4 text-gray-400">Price</th>
-                  <th className="text-right p-4 text-gray-400">24h Change</th>
-                  <th className="text-right p-4 text-gray-400">24h Volume</th>
+                  <th className="text-left p-4 text-gray-300">Pair</th>
+                  <th className="text-right p-4 text-gray-300">Price</th>
+                  <th className="text-right p-4 text-gray-300">24h Change</th>
+                  <th className="text-right p-4 text-gray-300">24h Volume</th>
                 </tr>
               </thead>
               <tbody>
@@ -82,8 +82,8 @@ const Markets = () => {
                       key={index}
                       className="border-b border-gray-800 hover:bg-gray-800/50 transition-colors"
                     >
-                      <td className="p-4 font-medium">{item.pair}</td>
-                      <td className="text-right p-4">${item.price}</td>
+                      <td className="p-4 font-medium text-gray-100">{item.pair}</td>
+                      <td className="text-right p-4 text-gray-100">${item.price}</td>
                       <td className={`text-right p-4 flex items-center justify-end ${
                         item.change.startsWith('+') ? 'text-green-400' : 'text-red-400'
                       }`}>
@@ -94,7 +94,7 @@ const Markets = () => {
                         )}
                         {item.change}%
                       </td>
-                      <td className="text-right p-4 text-gray-400">${item.volume}</td>
+                      <td className="text-right p-4 text-gray-300">${item.volume}</td>
                     </tr>
                   ))}
               </tbody>
@@ -105,7 +105,7 @@ const Markets = () => {
         {/* Chart Section */}
         <div className="mt-8 animate-fade-in" style={{ animationDelay: "0.4s" }}>
           <div className="bg-gray-900/50 rounded-xl border border-gray-800 p-6">
-            <h2 className="text-xl font-bold mb-4">BTC/USDT Price Chart</h2>
+            <h2 className="text-xl font-bold mb-4 text-gray-100">BTC/USDT Price Chart</h2>
             <PriceChart symbol="BTC/USDT" />
           </div>
         </div>
